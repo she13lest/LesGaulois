@@ -36,7 +36,7 @@ public class Gaulois {
 		return "Le gaulois " + nom + " : ";
 	}
 
-	@Override
+	
 	public String toString() {
 		return nom;
 	}
