@@ -1,4 +1,5 @@
 package personnages;
+import village_gaulois.Musee;
 import village_gaulois.Village;
 import objets.Equipement;
 
@@ -60,6 +61,19 @@ public class Gaulois {
 			parler(BONJOUR + nom + ". Je suis le chef le village : " + village.getNom() + ".");
 		} else {
 			parler(BONJOUR + nom + ". J'habite le village : " + village.getNom() + ".");
+		}
+	}
+	
+	public void faireUneDonnation(Musee musee) {
+		if (nbTrophees > 0) {
+			String texte = "Je donne au musee tous mes trophees :";
+			for (int i = 0; i < nbTrophees; i++) {
+				texte += "\n- " + trophees[i].toString();
+				musee.donnerTrophees(this, trophees[i]);
+				trophees[i] = null;
+			}
+			nbTrophees = 0;
+			parler(texte);
 		}
 	}
 
