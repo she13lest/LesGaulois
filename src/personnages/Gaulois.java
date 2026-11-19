@@ -1,17 +1,21 @@
 package personnages;
 import village_gaulois.Village;
+import objets.Equipement;
 
 public class Gaulois {
 	private String nom;
-	private int force;
 	private int effetPotion = 1;
 	private Village village;
+	private int force;
+	private int nbTrophees;
+	private Equipement[] trophees = new Equipement[100];
+	private static final String BONJOUR = "Bonjour, je m'appelle ";
 	
 	public Gaulois(String nom, int force) {
 		this.nom = nom;
 		this.force = force;
 	}
-
+	
 	public String getNom() {
 		return nom;
 	}
@@ -25,20 +29,19 @@ public class Gaulois {
 	}
 	
 	public void frapper(Romain romain) {
-		System.out.println(nom + " envoie un grand coup dans la machoire de " + romain.getNom());
-		romain.recevoirCoup((force * effetPotion) / 3);
-		if (effetPotion > 1) {
-			effetPotion--;
-		}
+	    System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
+	    Equipement[] newTrophees = romain.recevoirCoup((force / 2) * effetPotion);
+	    effetPotion--;
+	    if (effetPotion < 1) {
+	        effetPotion = 1;
+	    }
+	    for (int i = 0; newTrophees != null && i < newTrophees.length; i++, nbTrophees++) {
+	        this.trophees[nbTrophees] = newTrophees[i];
+	    }
 	}
 	
 	private String prendreParole() {
-		return "Le gaulois " + nom + " : ";
-	}
-
-	
-	public String toString() {
-		return nom;
+	    return "Le gaulois " + nom + " : ";
 	}
 	
 	public static void main(String[] args) {
@@ -52,11 +55,11 @@ public class Gaulois {
 	
 	public void sePresenter() {
 		if (village == null) {
-			parler("Bonjour, je m'appelle " + nom + ". Je voyage de villages en villages.");
+			parler(BONJOUR + nom + ". Je voyage de villages en villages.");
 		} else if (village.getChef() == this) {
-			parler("Bonjour, je m'appelle " + nom + ". Je suis le chef le village : " + village.getNom() + ".");
+			parler(BONJOUR + nom + ". Je suis le chef le village : " + village.getNom() + ".");
 		} else {
-			parler("Bonjour, je m'appelle " + nom + ". J'habite le village : " + village.getNom() + ".");
+			parler(BONJOUR + nom + ". J'habite le village : " + village.getNom() + ".");
 		}
 	}
 
